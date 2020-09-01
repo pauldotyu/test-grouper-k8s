@@ -1,0 +1,43 @@
+apiVersion: v1
+data:
+  grouper-loader.properties: "#################################\n## LDAP connections\n#################################\n#
+    specify the ldap connection with user, pass, url\n# the string after \"ldap.\"
+    is the ID of the connection, and it should not have\n# spaces or other special
+    chars in it.  In this case is it \"personLdap\"\n\n#note the URL should start
+    with ldap: or ldaps: if it is SSL.  \n#It should contain the server and port (optional
+    if not default), and baseDn,\n#e.g. ldaps://ldapserver.school.edu:636/dc=school,dc=edu\nldap.demo.url
+    = ldap://data:389/dc=internet2,dc=edu\n \n#optional, if authenticated\nldap.demo.user
+    = cn=admin,dc=internet2,dc=edu\n \n#optional, if authenticated note the password
+    can be stored encrypted in an external file\nldap.demo.pass.elConfig = ${java.lang.System.getenv().get('SUBJECT_SOURCE_LDAP_PASSWORD_FILE')
+    != null ? org.apache.commons.io.FileUtils.readFileToString(java.lang.System.getenv().get('SUBJECT_SOURCE_LDAP_PASSWORD_FILE'),
+    \"utf-8\") : java.lang.System.getenv().get('SUBJECT_SOURCE_LDAP_PASSWORD')}\n#ldap.demo.pass
+    = password\n \n#optional, if you are using tls, set this to true.  Generally you
+    will not be using an SSL URL to use TLS...\nldap.demo.tls = false\n \n#optional,
+    if using sasl\n#ldap.personLdap.saslAuthorizationId =\n#ldap.personLdap.saslRealm
+    =\n \n#optional (note, time limit is for search operations, timeout is for connection
+    timeouts),\n#most of these default to vt-ldap defaults.  times are in millis\n#validateOnCheckout
+    defaults to true if all other validate methods are false\n#ldap.personLdap.batchSize
+    =\n#ldap.personLdap.countLimit =\n#ldap.personLdap.timeLimit =\n#ldap.personLdap.timeout
+    =\n#ldap.personLdap.minPoolSize =\n#ldap.personLdap.maxPoolSize =\n#ldap.personLdap.validateOnCheckIn
+    =\n#ldap.personLdap.validateOnCheckOut =\n#ldap.personLdap.validatePeriodically
+    =\n#ldap.personLdap.validateTimerPeriod =\n#ldap.personLdap.pruneTimerPeriod =\n#if
+    connections expire after a certain amount of time, this is it, in millis, defaults
+    to 300000 (5 minutes)\n#ldap.personLdap.expirationTime =\n\n#make the paths fully
+    qualified and not relative to the loader group.\nloader.ldap.requireTopStemAsStemFromConfigGroup=false\n\n#####################################\n##
+    Messaging integration with change log\n#####################################\nchangeLog.consumer.rabbitMqMessagingSample.quartzCron
+    = 0 * * * * ?                                                          \n\n# note,
+    change \"messagingSample\" in key to be the name of the consumer.  e.g. changeLog.consumer.someNameAnyName.class\nchangeLog.consumer.rabbitMqMessagingSample.class
+    = edu.internet2.middleware.grouper.changeLog.esb.consumer.EsbConsumer\n\nchangeLog.consumer.rabbitMqMessagingSample.publisher.class
+    = edu.internet2.middleware.grouper.changeLog.esb.consumer.EsbMessagingPublisher\nchangeLog.consumer.rabbitMqMessagingSample.publisher.messagingSystemName
+    = rabbitmq\n# note, routingKey property is valid only for rabbitmq. For other
+    messaging systems, it is ignored.\nchangeLog.consumer.rabbitMqMessagingSample.publisher.routingKey
+    = \n## queue or topic\nchangeLog.consumer.rabbitMqMessagingSample.publisher.messageQueueType
+    = queue\nchangeLog.consumer.rabbitMqMessagingSample.publisher.queueOrTopicName
+    = sampleQueue\n## this is optional if not using \"id\" for subjectId, need to
+    be a subject attribute in the sources.xml\n#changeLog.consumer.rabbitMqMessagingSample.publisher.addSubjectAttributes
+    = email\n"
+kind: ConfigMap
+metadata:
+  name: grouper-loader-properties
+  namespace: test
+# immutable: true
