@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: idp
+  name: idp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: idp
+  template:
+    metadata:
+      labels:
+        app: idp
+    spec:
+      containers:
+      - env:
+        - name: JETTY_BACKCHANNEL_SSL_KEYSTORE_PASSWORD
+          value: password
+        - name: JETTY_BROWSER_SSL_KEYSTORE_PASSWORD
+          value: password
+        - name: JETTY_MAX_HEAP
+          value: 64m
+        image: test-compose_idp
+        imagePullPolicy: "Never"
+        name: idp
+        ports:
+        - containerPort: 4443
+        resources: {}
+          # requests:
+          #   memory: "128Mi"
+          #   cpu: "512m"
+          # limits:
+          #   memory: "4068Mi"
+          #   cpu: "10000m"
+      restartPolicy: Always
+      serviceAccountName: ""
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: idp
+  name: idp
+spec:
+  ports:
+  - name: "4443"
+    port: 4443
+    targetPort: 4443
+  selector:
+    app: idp
+  type: LoadBalancer
