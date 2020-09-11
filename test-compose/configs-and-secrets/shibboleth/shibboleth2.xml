@@ -22,7 +22,7 @@
 
 
     <!-- The ApplicationDefaults element is where most of Shibboleth's SAML bits are defined. -->
-    <ApplicationDefaults entityID="https://grouperdemo/shibboleth"
+    <ApplicationDefaults entityID="https://localhost/shibboleth"
                          REMOTE_USER="uid">
 
         <!--

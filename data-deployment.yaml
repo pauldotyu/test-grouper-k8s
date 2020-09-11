@@ -15,8 +15,8 @@ spec:
         app: data
     spec:
       containers:
-      - image: test-compose_data
-        imagePullPolicy: "Never"
+      - image: grouper0822.azurecr.io/grouper-data:latest
+        imagePullPolicy: "Always"
         name: data
         ports:
         - containerPort: 389

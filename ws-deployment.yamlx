@@ -30,8 +30,8 @@ spec:
           value: password
         - name: USERTOKEN
           value: build-2
-        image: test-compose_ws
-        imagePullPolicy: "Never"
+        image: grouper0822.azurecr.io/grouper-ws:latest
+        imagePullPolicy: "Always"
         name: ws
         ports:
         - containerPort: 443

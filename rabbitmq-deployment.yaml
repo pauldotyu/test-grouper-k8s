@@ -19,7 +19,7 @@ spec:
         - name: RABBITMQ_NODENAME
           value: docker-rabbit
         image: rabbitmq:management
-        imagePullPolicy: "IfNotPresent"
+        imagePullPolicy: "Always"
         name: rabbitmq
         ports:
         - containerPort: 15672

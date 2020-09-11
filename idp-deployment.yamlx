@@ -22,8 +22,8 @@ spec:
           value: password
         - name: JETTY_MAX_HEAP
           value: 64m
-        image: test-compose_idp
-        imagePullPolicy: "Never"
+        image: grouper0822.azurecr.io/grouper-idp:latest
+        imagePullPolicy: "Always"
         name: idp
         ports:
         - containerPort: 4443
@@ -52,4 +52,5 @@ spec:
     targetPort: 4443
   selector:
     app: idp
-  type: LoadBalancer
+  type: ClusterIP
+

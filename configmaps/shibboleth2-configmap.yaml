@@ -13,7 +13,7 @@ data:
     the example-shibboleth2.xml\n    file, and the https://wiki.shibboleth.net/confluence/display/SHIB2/NativeSPRequestMapHowTo
     topic.\n    -->\n    <TCPListener address=\"127.0.0.1\" port=\"1600\"/> \n\n\n
     \   <!-- The ApplicationDefaults element is where most of Shibboleth's SAML bits
-    are defined. -->\n    <ApplicationDefaults entityID=\"https://grouperdemo/shibboleth\"\n
+    are defined. -->\n    <ApplicationDefaults entityID=\"https://40.125.126.119/shibboleth\"\n
     \                        REMOTE_USER=\"uid\">\n\n        <!--\n        Controls
     session lifetimes, address checks, cookie handling, and the protocol handlers.\n
     \       You MUST supply an effectively unique handlerURL value for each of your
@@ -24,7 +24,7 @@ data:
     \       Note that while we default checkAddress to \"false\", this has a negative
     impact on the\n        security of your site. Stealing sessions via cookie theft
     is much easier with this disabled.\n        -->\n        <Sessions lifetime=\"28800\"
-    timeout=\"28800\" relayState=\"ss:mem\"\n                  checkAddress=\"false\"
+    timeout=\"28800\" relayState=\"ss:mem\"\n                  checkAddress=\"true\"
     handlerSSL=\"true\" cookieProps=\"https\">\n\n            <!--\n            Configures
     SSO for a default IdP. To allow for >1 IdP, remove\n            entityID property
     and adjust discoveryURL to point to discovery service.\n            (Set discoveryProtocol

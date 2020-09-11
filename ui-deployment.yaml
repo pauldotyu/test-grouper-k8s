@@ -16,6 +16,32 @@ spec:
         app: ui
     spec:
       containers:
+      - env:
+        - name: JETTY_BACKCHANNEL_SSL_KEYSTORE_PASSWORD
+          value: password
+        - name: JETTY_BROWSER_SSL_KEYSTORE_PASSWORD
+          value: password
+        - name: JETTY_MAX_HEAP
+          value: 64m
+        image: grouper0822.azurecr.io/grouper-idp:latest
+        imagePullPolicy: "Always"
+        name: idp
+        ports:
+        - containerPort: 4443
+        resources: {}
+          # requests:
+          #   memory: "128Mi"
+          #   cpu: "512m"
+          # limits:
+          #   memory: "4068Mi"
+          #   cpu: "10000m"
+        volumeMounts:
+        - name: grouper-sp
+          mountPath: /opt/shibboleth-idp/metadata/grouper-sp.xml
+          subPath: grouper-sp.xml
+        - name: shibboleth2-idp-metadata
+          mountPath: /opt/shibboleth-idp/metadata/idp-metadata.xml
+          subPath: idp-metadata.xml
       - args:
         - bash
         - -c
@@ -31,8 +57,8 @@ spec:
           value: password
         - name: USERTOKEN
           value: build-2
-        image: test-compose_ui
-        imagePullPolicy: "Never"
+        image: grouper0822.azurecr.io/grouper-ui:latest
+        imagePullPolicy: "Always"
         name: ui
         ports:
         - containerPort: 80
@@ -126,6 +152,93 @@ spec:
         - name: host-key-pem
           mountPath: /run/secrets/host-key.pem
           subPath: host-key.pem
+      - args:
+        - bash
+        - -c
+        - while ! curl -s data:3306 > /dev/null; do echo waiting for mysql to start;
+          sleep 3; done; while ! curl -s ldap://data:389 > /dev/null; do echo waiting
+          for ldap to start; sleep 3; done; exec ws
+        env:
+        - name: ENV
+          value: dev
+        - name: GROUPER_DATABASE_PASSWORD_FILE
+          value: /run/secrets/database_password.txt
+        - name: SUBJECT_SOURCE_LDAP_PASSWORD
+          value: password
+        - name: USERTOKEN
+          value: build-2
+        image: grouper0822.azurecr.io/grouper-ws:latest
+        imagePullPolicy: "Always"
+        name: ws
+        ports:
+        - containerPort: 443
+        resources: {}
+          # requests:
+          #   memory: "128Mi"
+          #   cpu: "512m"
+          # limits:
+          #   memory: "4068Mi"
+          #   cpu: "10000m"
+        volumeMounts:
+        - name: database-password-txt
+          mountPath: /run/secrets/database_password.txt
+          subPath: database_password.txt
+        # grouper.hibernate.properties
+        - name: grouper-hibernate-properties
+          mountPath: /opt/grouper/grouper.apiBinary/conf/grouper.hibernate.properties
+          subPath: grouper.hibernate.properties
+        - name: grouper-hibernate-properties
+          mountPath: /opt/grouper/grouper.ui/WEB-INF/classes/grouper.hibernate.properties
+          subPath: grouper.hibernate.properties
+        - name: grouper-hibernate-properties
+          mountPath: /opt/grouper/grouper.ws/WEB-INF/classes/grouper.hibernate.properties
+          subPath: grouper.hibernate.properties
+        # grouper-loader.properties
+        - name: grouper-loader-properties
+          mountPath: /opt/grouper/grouper.apiBinary/conf/grouper-loader.properties
+          subPath: grouper-loader.properties
+        - name: grouper-loader-properties
+          mountPath: /opt/grouper/grouper.ui/WEB-INF/classes/grouper-loader.properties
+          subPath: grouper-loader.properties
+        - name: grouper-loader-properties
+          mountPath: /opt/grouper/grouper.ws/WEB-INF/classes/grouper-loader.properties
+          subPath: grouper-loader.properties
+        # subject.properties
+        - name: subject-properties
+          mountPath: /opt/grouper/grouper.apiBinary/conf/subject.properties
+          subPath: subject.properties
+        - name: subject-properties
+          mountPath: /opt/grouper/grouper.ui/WEB-INF/classes/subject.properties
+          subPath: subject.properties
+        - name: subject-properties
+          mountPath: /opt/grouper/grouper.ws/WEB-INF/classes/subject.properties
+          subPath: subject.properties
+        # grouper.properties
+        - name: grouper-properties
+          mountPath: /opt/grouper/conf/grouper.properties
+          subPath: grouper.properties
+        - name: grouper-properties
+          mountPath: /opt/grouper/grouper.apiBinary/conf/grouper.properties
+          subPath: grouper.properties
+        - name: grouper-properties
+          mountPath: /opt/grouper/grouper.ui/WEB-INF/classes/grouper.properties
+          subPath: grouper.properties
+        - name: grouper-properties
+          mountPath: /opt/grouper/grouper.ws/WEB-INF/classes/grouper.properties
+          subPath: grouper.properties
+        # grouper.client.properties
+        - name: grouper-client-properties
+          mountPath: /opt/grouper/conf/grouper.client.properties
+          subPath: grouper.client.properties
+        - name: grouper-client-properties
+          mountPath: /opt/grouper/grouper.apiBinary/conf/grouper.client.properties
+          subPath: grouper.client.properties
+        - name: grouper-client-properties
+          mountPath: /opt/grouper/grouper.ui/WEB-INF/classes/grouper.client.properties
+          subPath: grouper.client.properties
+        - name: grouper-client-properties
+          mountPath: /opt/grouper/grouper.ws/WEB-INF/classes/grouper.client.properties
+          subPath: grouper.client.properties
       restartPolicy: Always
       serviceAccountName: ""
       volumes:
@@ -197,7 +310,7 @@ spec:
           name: sp-key
           items:
           - key: sp-key.pem
-            path: shib_sp-key.pem
+            path: sp-key.pem
       - name: sp-cert-pem
         configMap:
           name: sp-cert
@@ -210,12 +323,19 @@ spec:
           items:
           - key: host-key.pem
             path: host-key.pem
-
+      - name: grouper-sp
+        configMap:
+          name: grouper-sp
+          items:
+          - key: grouper-sp.xml
+            path: grouper-sp.xml
 ---
 
 apiVersion: v1
 kind: Service
 metadata:
+  annotations:
+    service.beta.kubernetes.io/azure-load-balancer-resource-group: zz-grouper-rg
   labels:
     app: ui
   name: ui
@@ -227,6 +347,13 @@ spec:
   - name: "443"
     port: 443
     targetPort: 443
+  - name: "4443"
+    port: 4443
+    targetPort: 4443
+  - name: "8443"
+    port: 8443
+    targetPort: 8443
   selector:
     app: ui
   type: LoadBalancer
+  loadBalancerIP: 40.125.126.119

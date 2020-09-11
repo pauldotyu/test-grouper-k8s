@@ -34,8 +34,8 @@ spec:
           value: password
         - name: USERTOKEN
           value: build-2
-        image: test-compose_daemon
-        imagePullPolicy: "Never"
+        image: grouper0822.azurecr.io/grouper-daemon:latest
+        imagePullPolicy: "Always"
         name: daemon
         resources: {}
           # requests:
