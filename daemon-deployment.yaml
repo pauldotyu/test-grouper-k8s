@@ -16,10 +16,10 @@ spec:
     spec:
       containers:
       - name: daemon
-        # image: grouper0822.azurecr.io/grouper-daemon:latest
-        # imagePullPolicy: "Always"
-        image: grouper-daemon
-        imagePullPolicy: "IfNotPresent"
+        image: grouper0822.azurecr.io/grouper-daemon:latest
+        imagePullPolicy: "Always"
+        # image: grouper-daemon
+        # imagePullPolicy: "IfNotPresent"
         args:
         - bash
         - -c

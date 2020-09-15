@@ -17,10 +17,10 @@ spec:
     spec:
       containers:
       - name: idp
-        # image: grouper0822.azurecr.io/grouper-idp:latest
-        # imagePullPolicy: "Always"
-        image: grouper-idp
-        imagePullPolicy: "IfNotPresent"
+        image: grouper0822.azurecr.io/grouper-idp:latest
+        imagePullPolicy: "Always"
+        # image: grouper-idp
+        # imagePullPolicy: "IfNotPresent"
         env:
         - name: JETTY_BACKCHANNEL_SSL_KEYSTORE_PASSWORD
           value: password
@@ -45,10 +45,10 @@ spec:
           mountPath: /opt/shibboleth-idp/metadata/idp-metadata.xml
           subPath: idp-metadata.xml
       - name: ui
-        # image: grouper0822.azurecr.io/grouper-ui:latest
-        # imagePullPolicy: "Always"
-        image: grouper-ui
-        imagePullPolicy: "IfNotPresent"
+        image: grouper0822.azurecr.io/grouper-ui:latest
+        imagePullPolicy: "Always"
+        # image: grouper-ui
+        # imagePullPolicy: "IfNotPresent"
         args:
         - bash
         - -c
@@ -157,10 +157,10 @@ spec:
           mountPath: /run/secrets/host-key.pem
           subPath: host-key.pem
       - name: ws
-        # image: grouper0822.azurecr.io/grouper-ws:latest
-        # imagePullPolicy: "Always"
-        image: grouper-ws
-        imagePullPolicy: "IfNotPresent"
+        image: grouper0822.azurecr.io/grouper-ws:latest
+        imagePullPolicy: "Always"
+        # image: grouper-ws
+        # imagePullPolicy: "IfNotPresent"
         args:
         - bash
         - -c
@@ -340,8 +340,8 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  # annotations:
-  #   service.beta.kubernetes.io/azure-load-balancer-resource-group: zz-grouper-rg
+  annotations:
+    service.beta.kubernetes.io/azure-load-balancer-resource-group: zz-grouper-rg
   labels:
     app: ui
   name: ui
@@ -362,4 +362,4 @@ spec:
   selector:
     app: ui
   type: LoadBalancer
-  # loadBalancerIP: 40.125.126.119
+  loadBalancerIP: 40.125.126.119

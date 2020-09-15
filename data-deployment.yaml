@@ -16,10 +16,10 @@ spec:
     spec:
       containers:
       - name: data
-        # image: grouper0822.azurecr.io/grouper-data:latest
-        # imagePullPolicy: "Always"
-        image: grouper-data
-        imagePullPolicy: "IfNotPresent"
+        image: grouper0822.azurecr.io/grouper-data:latest
+        imagePullPolicy: "Always"
+        # image: grouper-data
+        # imagePullPolicy: "IfNotPresent"
         ports:
         - containerPort: 389
         - containerPort: 3306
