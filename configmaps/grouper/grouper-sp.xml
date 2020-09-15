@@ -1,0 +1,81 @@
+<!--
+This is example metadata only. Do *NOT* supply it as is without review,
+and do *NOT* provide it in real time to your partners.
+ -->
+<md:EntityDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata" ID="_57114916ca68943103854cb57a3a3b1c7c38bb81" entityID="https://grouperdemo/shibboleth">
+
+  <md:Extensions xmlns:alg="urn:oasis:names:tc:SAML:metadata:algsupport">
+    <alg:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha512"/>
+    <alg:DigestMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#sha384"/>
+    <alg:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/>
+    <alg:DigestMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#sha224"/>
+    <alg:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+    <alg:SigningMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#ecdsa-sha512"/>
+    <alg:SigningMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#ecdsa-sha384"/>
+    <alg:SigningMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#ecdsa-sha256"/>
+    <alg:SigningMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#ecdsa-sha224"/>
+    <alg:SigningMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha512"/>
+    <alg:SigningMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha384"/>
+    <alg:SigningMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"/>
+    <alg:SigningMethod Algorithm="http://www.w3.org/2009/xmldsig11#dsa-sha256"/>
+    <alg:SigningMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#ecdsa-sha1"/>
+    <alg:SigningMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+    <alg:SigningMethod Algorithm="http://www.w3.org/2000/09/xmldsig#dsa-sha1"/>
+  </md:Extensions>
+
+  <md:SPSSODescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
+    <md:Extensions>
+      <init:RequestInitiator xmlns:init="urn:oasis:names:tc:SAML:profiles:SSO:request-init" Binding="urn:oasis:names:tc:SAML:profiles:SSO:request-init" Location="https://grouperaks/Shibboleth.sso/Login"/>
+      <idpdisc:DiscoveryResponse xmlns:idpdisc="urn:oasis:names:tc:SAML:profiles:SSO:idp-discovery-protocol" Binding="urn:oasis:names:tc:SAML:profiles:SSO:idp-discovery-protocol" Location="https://grouperaks/Shibboleth.sso/Login" index="1"/>
+    </md:Extensions>
+    <md:KeyDescriptor>
+      <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+        <ds:KeyName>sp.example.org</ds:KeyName>
+        <ds:X509Data>
+          <ds:X509SubjectName>CN=sp.example.org,O=Internet2/TIER,L=Ann Arbor,ST=MI,C=US</ds:X509SubjectName>
+          <ds:X509Certificate>MIID5TCCAk2gAwIBAgIJAMXKlqsVJg2cMA0GCSqGSIb3DQEBCwUAMBUxEzARBgNV
+BAMTCmdyb3VwZXJha3MwHhcNMjAwOTE0MDUzNTEwWhcNMzAwOTEyMDUzNTEwWjAV
+MRMwEQYDVQQDEwpncm91cGVyYWtzMIIBojANBgkqhkiG9w0BAQEFAAOCAY8AMIIB
+igKCAYEAt44zQzCXkeyuenJ1GM7uvDeXMVCpMw/sw+zlLq9VnqZQ/LP1M5TVH3ml
+vyZvVzo2P3jvJvGdubiCROMbiEqTDwjv/stR+ZsYl2+ytOJd4206WGiN6+ofF2QA
+lyzUPWo67FXtb1qfe/L2yPEFYoatcNB+YCsTSK8D1VfnuAJc8W88d7lyTw9J57hn
+qzMIxmah4znQKbrnBN6d9GhDKx9Tg+hoQYB/BRovZhLeYr//2wDd+1nG87dTU/J5
+ZNQEQBAF86Ybk9OeYIX77JXWwz3KsRgVpREcAh/1TJCOedIJ8ylz5R0/x6Ez5RGZ
+X2jHRHS7gf0L/QOUuTqEyBo7LJwl9EyQ90HCntQwvHqbu9ivbESFVHoZSMwbBudP
+nWsr+K9YXRgn7TICymvClysvQ2obSErD9Izfmp67dnXTI4ybKSJIlkSJw+1VoOpJ
+mmBEwrxJ+zc4nlOmxJt0D6CaCsfy1ZAUn79WX9LZ2kpIKDeZafJJtVzDQwb+6m2X
+eMCwHfejAgMBAAGjODA2MBUGA1UdEQQOMAyCCmdyb3VwZXJha3MwHQYDVR0OBBYE
+FHpeXiQ0U4jZPd1nurn8Lta/eWklMA0GCSqGSIb3DQEBCwUAA4IBgQBJIeXrxzso
+HbrWEEjOBVgAdt0bMChapLSv3am//LhfB0BnTJgUQsGDYJQ27PmmqUWyLA9LG0G6
+vVAqg5YyTDtrEJmjxLJID4oiY7GVT6LC2i6lSzCueiEW/8HeOh37DnqrzanzUc1i
+1IAWWKyH9SzV4gJ/0d2mW8TUEmqlpWW8UvddhLaHbV0Fr1Xfwdpb0rYlndZivaUH
+XyASdjYHorz+CYaNiYrBmzLvGHK7FsSLNwnsoYf8cJlg0LSQJgpgsEguektjWK8B
+fOVpbt4t2noErR+f4Z/CHAaDzuRtibkrWxhp4Kvm0Uh78AJwaFGf1xiRlwcXp13I
+hqPTcHKkT1xPaJiVgvzuTJnWzQYJ9eUeGStqOI6HrQh9W9hg6DVkiieiqdtwJFT/
+zV62YNlZDkL86X13oTBhxlQNPzD5Qi55m43qUSYwpkQ1Da8TB1kzMKGF1il7cvAg
+j+tciJlbj7F3JcvLCrD9DuKr0adY50SnDipxZryYDfA4FSNDwnjgnrU=
+</ds:X509Certificate>
+        </ds:X509Data>
+      </ds:KeyInfo>
+      <md:EncryptionMethod Algorithm="http://www.w3.org/2009/xmlenc11#aes128-gcm"/>
+      <md:EncryptionMethod Algorithm="http://www.w3.org/2009/xmlenc11#aes192-gcm"/>
+      <md:EncryptionMethod Algorithm="http://www.w3.org/2009/xmlenc11#aes256-gcm"/>
+      <md:EncryptionMethod Algorithm="http://www.w3.org/2001/04/xmlenc#aes128-cbc"/>
+      <md:EncryptionMethod Algorithm="http://www.w3.org/2001/04/xmlenc#aes192-cbc"/>
+      <md:EncryptionMethod Algorithm="http://www.w3.org/2001/04/xmlenc#aes256-cbc"/>
+      <md:EncryptionMethod Algorithm="http://www.w3.org/2001/04/xmlenc#tripledes-cbc"/>
+      <md:EncryptionMethod Algorithm="http://www.w3.org/2009/xmlenc11#rsa-oaep"/>
+      <md:EncryptionMethod Algorithm="http://www.w3.org/2001/04/xmlenc#rsa-oaep-mgf1p"/>
+    </md:KeyDescriptor>
+    <md:ArtifactResolutionService Binding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP" Location="https://grouperaks/Shibboleth.sso/Artifact/SOAP" index="1"/>
+    <md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP" Location="https://grouperaks/Shibboleth.sso/SLO/SOAP"/>
+    <md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="https://grouperaks/Shibboleth.sso/SLO/Redirect"/>
+    <md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://grouperaks/Shibboleth.sso/SLO/POST"/>
+    <md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact" Location="https://grouperaks/Shibboleth.sso/SLO/Artifact"/>
+    <md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://grouperaks/Shibboleth.sso/SAML2/POST" index="1"/>
+    <md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST-SimpleSign" Location="https://grouperaks/Shibboleth.sso/SAML2/POST-SimpleSign" index="2"/>
+    <md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact" Location="https://grouperaks/Shibboleth.sso/SAML2/Artifact" index="3"/>
+    <md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:PAOS" Location="https://grouperaks/Shibboleth.sso/SAML2/ECP" index="4"/>
+  </md:SPSSODescriptor>
+
+</md:EntityDescriptor>

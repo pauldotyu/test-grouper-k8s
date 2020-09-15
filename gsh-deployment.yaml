@@ -1,0 +1,140 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: gsh
+  name: gsh
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gsh
+  template:
+    metadata:
+      labels:
+        app: gsh
+    spec:
+      containers:
+      - name: gsh
+        # image: grouper0822.azurecr.io/grouper-gsh:latest
+        # imagePullPolicy: "Always"
+        image: grouper-gsh
+        imagePullPolicy: "IfNotPresent"
+        env:
+        - name: ENV
+          value: dev
+        - name: GROUPER_DATABASE_PASSWORD_FILE
+          value: /run/secrets/database_password.txt
+        - name: SUBJECT_SOURCE_LDAP_PASSWORD
+          value: password
+        - name: USERTOKEN
+          value: build-2
+        resources: {}
+          # requests:
+          #   memory: "128Mi"
+          #   cpu: "512m"
+          # limits:
+          #   memory: "4068Mi"
+          #   cpu: "10000m"
+        volumeMounts:
+        - name: database-password-txt
+          mountPath: /run/secrets/database_password.txt
+          subPath: database_password.txt
+        # grouper.hibernate.properties
+        - name: grouper-hibernate-properties
+          mountPath: /opt/grouper/grouper.apiBinary/conf/grouper.hibernate.properties
+          subPath: grouper.hibernate.properties
+        - name: grouper-hibernate-properties
+          mountPath: /opt/grouper/grouper.ui/WEB-INF/classes/grouper.hibernate.properties
+          subPath: grouper.hibernate.properties
+        - name: grouper-hibernate-properties
+          mountPath: /opt/grouper/grouper.ws/WEB-INF/classes/grouper.hibernate.properties
+          subPath: grouper.hibernate.properties
+        # grouper-loader.properties
+        - name: grouper-loader-properties
+          mountPath: /opt/grouper/grouper.apiBinary/conf/grouper-loader.properties
+          subPath: grouper-loader.properties
+        - name: grouper-loader-properties
+          mountPath: /opt/grouper/grouper.ui/WEB-INF/classes/grouper-loader.properties
+          subPath: grouper-loader.properties
+        - name: grouper-loader-properties
+          mountPath: /opt/grouper/grouper.ws/WEB-INF/classes/grouper-loader.properties
+          subPath: grouper-loader.properties
+        # subject.properties
+        - name: subject-properties
+          mountPath: /opt/grouper/grouper.apiBinary/conf/subject.properties
+          subPath: subject.properties
+        - name: subject-properties
+          mountPath: /opt/grouper/grouper.ui/WEB-INF/classes/subject.properties
+          subPath: subject.properties
+        - name: subject-properties
+          mountPath: /opt/grouper/grouper.ws/WEB-INF/classes/subject.properties
+          subPath: subject.properties
+        # grouper.properties
+        - name: grouper-properties
+          mountPath: /opt/grouper/conf/grouper.properties
+          subPath: grouper.properties
+        - name: grouper-properties
+          mountPath: /opt/grouper/grouper.apiBinary/conf/grouper.properties
+          subPath: grouper.properties
+        - name: grouper-properties
+          mountPath: /opt/grouper/grouper.ui/WEB-INF/classes/grouper.properties
+          subPath: grouper.properties
+        - name: grouper-properties
+          mountPath: /opt/grouper/grouper.ws/WEB-INF/classes/grouper.properties
+          subPath: grouper.properties
+        # grouper.client.properties
+        - name: grouper-client-properties
+          mountPath: /opt/grouper/conf/grouper.client.properties
+          subPath: grouper.client.properties
+        - name: grouper-client-properties
+          mountPath: /opt/grouper/grouper.apiBinary/conf/grouper.client.properties
+          subPath: grouper.client.properties
+        - name: grouper-client-properties
+          mountPath: /opt/grouper/grouper.ui/WEB-INF/classes/grouper.client.properties
+          subPath: grouper.client.properties
+        - name: grouper-client-properties
+          mountPath: /opt/grouper/grouper.ws/WEB-INF/classes/grouper.client.properties
+          subPath: grouper.client.properties
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes:
+      - name: database-password-txt
+        configMap:
+          name: database-password
+          items:
+          - key: database_password.txt
+            path: database_password.txt
+      - name: grouper-hibernate-properties
+        configMap:
+          name: grouper-hibernate-properties
+          items:
+          - key: grouper.hibernate.properties
+            # path: grouper_grouper.hibernate.properties
+            path: grouper.hibernate.properties
+      - name: grouper-loader-properties
+        configMap:
+          name: grouper-loader-properties
+          items:
+          - key: grouper-loader.properties
+            # path: grouper_grouper-loader.properties
+            path: grouper-loader.properties
+      - name: subject-properties
+        configMap:
+          name: subject-properties
+          items:
+          - key: subject.properties
+            # path: grouper_subject.properties
+            path: subject.properties
+      - name: grouper-properties
+        configMap:
+          name: grouper-properties
+          items:
+          - key: grouper.properties
+            path: grouper.properties
+      - name: grouper-client-properties
+        configMap:
+          name: grouper-client-properties
+          items:
+          - key: grouper.client.properties
+            path: grouper.client.properties
