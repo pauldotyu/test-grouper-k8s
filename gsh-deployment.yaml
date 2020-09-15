@@ -18,8 +18,8 @@ spec:
       - name: gsh
         image: grouper0822.azurecr.io/grouper-gsh:latest
         imagePullPolicy: "Always"
-        image: grouper-gsh
-        imagePullPolicy: "IfNotPresent"
+        # image: grouper-gsh
+        # imagePullPolicy: "IfNotPresent"
         env:
         - name: ENV
           value: dev
