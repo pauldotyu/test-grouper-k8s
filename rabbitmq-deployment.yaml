@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: rabbitmq
+  name: rabbitmq
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rabbitmq
+  template:
+    metadata:
+      labels:
+        app: rabbitmq
+    spec:
+      containers:
+      - name: rabbitmq
+        image: rabbitmq:management
+        imagePullPolicy: "IfNotPresent"
+        env:
+        - name: RABBITMQ_NODENAME
+          value: docker-rabbit
+        ports:
+        - containerPort: 15672
+        resources: {}
+          # requests:
+          #   memory: "128Mi"
+          #   cpu: "512m"
+          # limits:
+          #   memory: "4068Mi"
+          #   cpu: "10000m"
+      hostname: rabbitmq
+      restartPolicy: Always
+      serviceAccountName: ""
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: rabbitmq
+  name: rabbitmq
+spec:
+  ports:
+  - name: "15672"
+    port: 15672
+    targetPort: 15672
+  selector:
+    app: rabbitmq
